@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  web:
+    container_name: shop_api
+    build:
+      args:
+        RUBY_VERSION: 3.0.0-alpine
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      PG_PASSWORD: password
+volumes:
+  postgres:
