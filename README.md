@@ -1,24 +1,22 @@
-# README
+# Shop API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Example app created for the following blog post
+**Blog post link:** 
 
-Things you may want to cover:
+if you wish to test the application's deployment on the ** GKE (Google Kubernetes Engine)**. The ``K8-deployment-config`` directory contains the configuration information.
 
-* Ruby version
+### GKE Deployment Steps:
+If you already have a GCP project setup and ``gcloud`` cli is configured, use the following steps to deploy the application
+- Create a GKE Cluster with your desired config.
+`` gcloud container --project "YOUR_PROJECT_ID" clusters create "example-cluster" --zone "europe-west2" --machine-type "e2-micro" --disk-type "pd-standard" --disk-size "99" --num-nodes "2"``
+- Build and deploy your application image to the Google Container Registry.
+``gcloud builds submit --tag=gcr.io/YOUR_PROJECT_ID/APP_IMAGE .``
+- Create a Cloud SQL Postgres database.
+- Generate service account credentials.json.
+- Connect to the DB instance using Cloud SQL proxy(Proxy container details are given in the deployment.yml file).
+- Apply you application deployment file using kubectl.
+`` kubectl apply -f deployment.yml``
 
-* System dependencies
 
-* Configuration
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
