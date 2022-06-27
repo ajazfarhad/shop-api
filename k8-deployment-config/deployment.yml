@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-api-deployment
+  namespace: staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shop-api
+  template:
+    metadata:
+      labels:
+        app: shop-api
+    spec:
+      volumes:
+      - name: shop-api-master-key
+        secret:
+          secretName: shop-api-master-key
+          items:
+            - key: master-key
+              path: master.key
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials
+
+      containers:
+      # [Application contianer]
+      - name: shop-api-container
+        image: gcr.io/<YOUR_GCP_PROJECT_ID>/shop-api:latest
+        volumeMounts:
+          - mountPath: /app/config/master.key
+            name: shop-api-master-key
+            subPath: master.key
+        env:
+          - name: SHOP_API_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: shop-api-db-password
+                key: db_password
+        ports:
+          - containerPort: 3000
+            name: shop-api
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.13
+        command: ["/cloud_sql_proxy",
+                  "-instances=<YOUR_GCP_PROJECT_ID>:europe-west2:shop-api-db=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json",
+                  "-term_timeout=30s"]
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
