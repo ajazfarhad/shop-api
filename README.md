@@ -1,9 +1,9 @@
 # Shop API
 
 Example app created for the following blog post
+Link TBA
 
-
-if you wish to test the application's deployment on the ** GKE (Google Kubernetes Engine)**. The ``K8-deployment-config`` directory contains the configuration information.
+if you wish to test the application's deployment on the **GKE (Google Kubernetes Engine)**. The ``K8-deployment-config`` directory contains the configuration information.
 
 ### GKE Deployment Steps:
 If you already have a GCP project setup and ``gcloud`` cli is configured, use the following steps to deploy the application
