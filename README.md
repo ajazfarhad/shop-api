@@ -14,7 +14,7 @@ If you already have a GCP project setup and ``gcloud`` cli is configured, use th
 - Create a Cloud SQL Postgres database.
 - Generate service account credentials.json.
 - Connect to the DB instance using Cloud SQL proxy(Proxy container details are given in the deployment.yml file).
-- Apply you application deployment file using kubectl.
+- Apply your application deployment file using kubectl.
 `` kubectl apply -f deployment.yml``
 
 
