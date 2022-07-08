@@ -1,7 +1,7 @@
 # Shop API
 
 Example app created for the following blog post
-Link TBA
+https://kyan.com/news/accessing-a-gke-internal-service-from-the-api-gateway
 
 if you wish to test the application's deployment on the **GKE (Google Kubernetes Engine)**. The ``K8-deployment-config`` directory contains the configuration information.
 
